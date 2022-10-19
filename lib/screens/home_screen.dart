@@ -208,11 +208,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              RekapText(
-                                'Extracted Text',
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              image == null
+                                  ? RekapText(
+                                      'Full Text',
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                    )
+                                  : RekapText(
+                                      'Extracted Text',
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                               SizedBox(height: 10),
                               RekapTextField(
                                 controller: extractedTextController,
