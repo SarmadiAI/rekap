@@ -11,6 +11,7 @@ class RekapImageField extends StatefulWidget {
   final Function getImage;
   final Function deleteImage;
   RekapImageField({
+    super.key,
     this.image,
     required this.getImage,
     required this.deleteImage,
@@ -65,7 +66,7 @@ class _RekapImageFieldState extends State<RekapImageField> {
                 });
               },
               child: widget.image == null
-                  ? SizedBox(
+                  ? const SizedBox(
                       child: Center(
                         child: Icon(
                           CupertinoIcons.camera,
@@ -93,7 +94,7 @@ class _RekapImageFieldState extends State<RekapImageField> {
             ),
             Visibility(
               visible: widget.image == null,
-              child: Divider(
+              child: const Divider(
                 thickness: 1,
                 indent: 30,
                 endIndent: 30,
@@ -108,10 +109,9 @@ class _RekapImageFieldState extends State<RekapImageField> {
                 setState(() {
                   uploaded = true;
                 });
-                print('yes');
               },
               child: widget.image == null
-                  ? SizedBox(
+                  ? const SizedBox(
                       child: Center(
                         child: Icon(
                           CupertinoIcons.photo,
@@ -130,7 +130,7 @@ class _RekapImageFieldState extends State<RekapImageField> {
 }
 
 OutlineInputBorder inputBorder() {
-  return OutlineInputBorder(
+  return const OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(4)),
     borderSide: BorderSide(
       color: Colors.transparent,
@@ -140,7 +140,7 @@ OutlineInputBorder inputBorder() {
 }
 
 OutlineInputBorder focusedBorder() {
-  return OutlineInputBorder(
+  return const OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(4)),
     borderSide: BorderSide(
       color: kRekapPurpleColor,
