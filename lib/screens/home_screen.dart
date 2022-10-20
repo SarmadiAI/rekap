@@ -15,9 +15,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController extractedTextController = TextEditingController();
+  TextEditingController fullTextController = TextEditingController();
   TextEditingController summarizedTextController = TextEditingController();
+  late int fullTextLength;
+  late int summarizedTextLength;
   XFile? image;
+  double currentSliderValue = 50;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      fullTextLength = fullTextController.text.length;
+      summarizedTextLength = summarizedTextController.text.length;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 50,
                             decoration: BoxDecoration(
                               color: kSarmadiBlackColor,
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                             child: Center(
                               child: RekapText(
@@ -208,15 +220,76 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              RekapText(
-                                'Extracted Text',
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              image == null
+                                  ? RekapText(
+                                      'Full Text',
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                    )
+                                  : RekapText(
+                                      'Extracted Text',
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                               SizedBox(height: 10),
-                              RekapTextField(
-                                controller: extractedTextController,
-                                maxLines: 7,
+                              Stack(
+                                children: [
+                                  RekapTextField(
+                                    controller: fullTextController,
+                                    maxLines: 7,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        fullTextLength =
+                                            fullTextController.text.length;
+                                      });
+                                    },
+                                  ),
+                                  Positioned(
+                                    bottom: 20,
+                                    right: 25,
+                                    child: fullTextLength < 200
+                                        ? MaterialButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            child: Container(
+                                              width: 175,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
+                                              child: Center(
+                                                child: RekapText(
+                                                  'Rekap!',
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : MaterialButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            child: Container(
+                                              width: 175,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: kRekapPurpleColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
+                                              child: Center(
+                                                child: RekapText(
+                                                  'Rekap!',
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -231,9 +304,56 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                               SizedBox(height: 10),
-                              RekapTextField(
-                                controller: summarizedTextController,
-                                maxLines: 7,
+                              Stack(
+                                children: [
+                                  RekapTextField(
+                                    controller: summarizedTextController,
+                                    readOnly: true,
+                                    maxLines: 7,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        summarizedTextLength =
+                                            summarizedTextController
+                                                .text.length;
+                                      });
+                                    },
+                                  ),
+                                  Positioned(
+                                    bottom: 20,
+                                    right: 25,
+                                    child: summarizedTextLength > 0
+                                        ? Row(
+                                            children: [
+                                              InkWell(
+                                                onTap: () {},
+                                                child: Icon(
+                                                  CupertinoIcons.speaker_2,
+                                                  color: kSarmadiBlackColor,
+                                                ),
+                                              ),
+                                              Slider(
+                                                value: currentSliderValue,
+                                                min: 0,
+                                                max: 100,
+                                                divisions: 20,
+                                                label: 'Summary Coefficient: ' +
+                                                    currentSliderValue
+                                                        .round()
+                                                        .toString(),
+                                                activeColor: kRekapPurpleColor,
+                                                inactiveColor: kRekapPurpleColor
+                                                    .withOpacity(0.3),
+                                                onChanged: (double value) {
+                                                  setState(() {
+                                                    currentSliderValue = value;
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          )
+                                        : Container(),
+                                  )
+                                ],
                               ),
                             ],
                           ),

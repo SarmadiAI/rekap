@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:SummaryDo/components/rekap_text.dart';
 import 'package:SummaryDo/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class RekapImageField extends StatefulWidget {
   XFile? image;
@@ -51,7 +53,7 @@ class _RekapImageFieldState extends State<RekapImageField> {
                   alignment: Alignment.topCenter,
                 ),
               ),
-        child: Column(
+        child: Row(
           mainAxisAlignment: widget.image == null
               ? MainAxisAlignment.spaceEvenly
               : MainAxisAlignment.spaceBetween,
@@ -66,13 +68,27 @@ class _RekapImageFieldState extends State<RekapImageField> {
                 });
               },
               child: widget.image == null
-                  ? const SizedBox(
-                      child: Center(
-                        child: Icon(
-                          CupertinoIcons.camera,
-                          color: Colors.grey,
-                          size: 50,
-                        ),
+
+                  ? SizedBox(
+                      width: 350,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            child: Center(
+                              child: Icon(
+                                CupertinoIcons.camera,
+                                color: Colors.grey,
+                                size: 50,
+                              ),
+                            ),
+                          ),
+                          RekapText(
+                            'Take a pic from your device\'s camera',
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ],
                       ),
                     )
                   : Align(
@@ -94,10 +110,11 @@ class _RekapImageFieldState extends State<RekapImageField> {
             ),
             Visibility(
               visible: widget.image == null,
-              child: const Divider(
+
+              child: VerticalDivider(
                 thickness: 1,
-                indent: 30,
-                endIndent: 30,
+                indent: 50,
+                endIndent: 50,
                 color: Colors.grey,
               ),
             ),
@@ -111,13 +128,27 @@ class _RekapImageFieldState extends State<RekapImageField> {
                 });
               },
               child: widget.image == null
-                  ? const SizedBox(
-                      child: Center(
-                        child: Icon(
-                          CupertinoIcons.photo,
-                          color: Colors.grey,
-                          size: 50,
-                        ),
+
+                  ? SizedBox(
+                      width: 350,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            child: Center(
+                              child: Icon(
+                                CupertinoIcons.photo,
+                                color: Colors.grey,
+                                size: 50,
+                              ),
+                            ),
+                          ),
+                          RekapText(
+                            'Upload a pic from your device\'s gallary',
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ],
                       ),
                     )
                   : Container(),
